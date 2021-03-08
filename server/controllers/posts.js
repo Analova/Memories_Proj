@@ -12,10 +12,16 @@ const getPosts = async(req,res)=>{
  }
 }
 
-const createPost = (req,res)=>{
- try{
+const createPost = async(req,res)=>{
+    const post=req.body
+    const newPost=new PostMessage(post)
 
- }catch(error){
+    try{
+       await newPost.save()
+       res.status(201).json(newPost)
+
+    }catch(error){
+        res.status(409).json({message:error.message})
 
  }
 }
