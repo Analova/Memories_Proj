@@ -4,12 +4,14 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
-
 import useStyles from './styles';
+import {useDispatch} from "react-redux"
+
+import {deletePost}from "../../../actions/posts"
 
 const Post = ({post,setCurrentId}) => {
-
 const classes = useStyles();
+const dipsatch = useDispatch();
 
     return (
          <Card className={classes.card}>
@@ -21,7 +23,7 @@ const classes = useStyles();
       <div className={classes.overlay2}>
         <Button style={{ color: 'white' }}
          size="small" 
-         onClick={()=>{setCurrentId(post._id)}}
+         onClick={()=>setCurrentId(post._id)}
          ><MoreHorizIcon fontSize="default" /></Button>
       </div>
       <div className={classes.details}>
@@ -33,7 +35,11 @@ const classes = useStyles();
       </CardContent>
       <CardActions className={classes.cardActions}>
         <Button size="small" color="primary" ><ThumbUpAltIcon fontSize="small" /> Like {post.likeCount} </Button>
-        <Button size="small" color="primary" ><DeleteIcon fontSize="small" /> Delete</Button>
+        <Button 
+        size="small"
+         color="primary"
+         onClick={()=>dipsatch(deletePost(post._id))}
+          ><DeleteIcon fontSize="small" /> Delete</Button>
       </CardActions>
     </Card>
     )
